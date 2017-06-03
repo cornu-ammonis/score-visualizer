@@ -7,7 +7,7 @@ import os
 import socket
 
 # Connect to Redis
-redis = Redis(host="redis", db=0, socket_timeout=2)
+redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
 
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ def hello():
 	try:
 		visits = redis.incr("counter")
 	except RedisError:
-		visits = "<i>cannot connect to Redis, counter a disabled</i>"
+		visits = "<i>cannot connect to Redis, counter disabled</i>"
 
 	x = [1, 2, 3, 4, 5]
 	y = [6, 7, 2, 4, 5]
@@ -27,7 +27,7 @@ def hello():
 	p.line(x, y, legend="Temp.", line_width=2)
 
 	script, div = components(p)
-	return render_template('graph.html', script=script, div=div)
+	return render_template('graph.html', script=script, div=div, visits=visits)
 	
 
 if __name__ == "__main__":
