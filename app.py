@@ -21,14 +21,17 @@ def hello():
 	x = [1, 2, 3, 4, 5]
 	y = [6, 7, 2, 4, 5]
 	# create a new plot with a title and axis labels
-	p = figure(title="simple line example", x_axis_label='x', y_axis_label='y')
+	p = figure(title="simple line example", x_axis_label='date',
+              x_axis_type='datetime', y_axis_label='score')
 
 	# add a line renderer with legend and line thickness
-	p.line(x, y, legend="Temp.", line_width=2)
+	p.line(x, y, legend="User1", line_width=2)
 
 	script, div = components(p)
 	return render_template('graph.html', script=script, div=div, visits=visits)
-	
+
+
+
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=80)
