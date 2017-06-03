@@ -30,8 +30,8 @@ def hello():
 	script, div = components(p)
 	return render_template('graph.html', script=script, div=div, visits=visits)
 
-
-
+@app.route('/updatescore/<user>/<int:score>')
+def updateScore(user, score):
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=80)
