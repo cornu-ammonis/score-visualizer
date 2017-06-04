@@ -1,18 +1,19 @@
 from flask import Flask
 from flask import render_template
-#from redis import Redis, RedisError
+from redis import Redis, RedisError
 from bokeh.plotting import figure
 from bokeh.embed import components 
 import os
 import socket
 import time
-import datetime
+from datetime import datetime as dt
 import redis
 
+
 # Connect to Redis
-#pool = redis.ConnectionPool(host="redis", port=6379, db=0)
-#r = redis.StrictRedis(connection_pool = pool, decode_responses=True)
-r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
+
+r = redis.StrictRedis(host="localhost", decode_responses=True)
+#r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
 
 app = Flask(__name__)
 
@@ -24,19 +25,29 @@ def hello():
 		visits = "<i>cannot connect to Redis, counter disabled</i>"
 
 		# create a new plot with a title and axis labels
-	p = figure(title="simple line example", x_axis_label='date', y_axis_label='score')
+	p = figure(width=1200, height=900, x_axis_type="datetime")
 
+	colors = ["red", "blue", "green", "black", "orange"]
 	users = r.smembers("users")
+	x_list= []
+	y_list = []
+	c = 0
 	for user in users:
-		y = r.zrange(user, 0, -1)
-		x = []
+		y = [0]
+		y.extend(r.zrange(user, 0, -1))
+		x = [dt(2017, 6, 4)]
 		for _y in y:
-			x.append(r.zscore(user, _y))
+			if _y is not 0:
+				x.append(dt.fromtimestamp(int(r.zscore(user, _y))))
 
 		#add a line to the plot using x and y values and username as legend
-		p.line(x, y, legend=user, line_width=2)
+		p.line(x=x, y=y, legend=user, color=colors[c])
+		c += 1
+		
 
+		
 
+	
 	script, div = components(p)
 	return render_template('graph.html', script=script, div=div, visits=visits)
 
@@ -52,4 +63,4 @@ def updateScore(user, score):
 	return render_template('graph.html', visits=us)
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=80)
+	app.run(host='0.0.0.0', port=84)
