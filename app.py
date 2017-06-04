@@ -10,9 +10,9 @@ import datetime
 import redis
 
 # Connect to Redis
-pool = redis.ConnectionPool(host="redis", port=6379, db=0)
-r = redis.StrictRedis(connection_pool = pool, decode_responses=True)
-#redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
+#pool = redis.ConnectionPool(host="redis", port=6379, db=0)
+#r = redis.StrictRedis(connection_pool = pool, decode_responses=True)
+r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
 
 app = Flask(__name__)
 
@@ -40,10 +40,11 @@ def hello():
 
 @app.route('/updatescore/<user>/<int:score>')
 def updateScore(user, score):
-
+	r.sadd("users", user)
 	r.zadd(user, time.time(), score)
-	t = r.zrange(user, 0, -1)
-	return render_template('graph.html', visits=int(t[0]))
+	#t = r.zrange(user, 0, -1)
+	
+	return render_template('graph.html', visits=us)
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=80)
