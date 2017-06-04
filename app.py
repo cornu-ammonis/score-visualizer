@@ -23,17 +23,19 @@ def hello():
 	except RedisError:
 		visits = "<i>cannot connect to Redis, counter disabled</i>"
 
-	y = r.zrange('test', 0, -1)
-	x = []
-	for _y in y:
-		x.append(r.zscore('test', _y))
+		# create a new plot with a title and axis labels
+	p = figure(title="simple line example", x_axis_label='date', y_axis_label='score')
 
-	# create a new plot with a title and axis labels
-	p = figure(title="simple line example", x_axis_label='date',
-               y_axis_label='score')
+	users = r.smembers("users")
+	for user in users:
+		y = r.zrange(user, 0, -1)
+		x = []
+		for _y in y:
+			x.append(r.zscore(user, _y))
 
-	# add a line renderer with legend and line thickness
-	p.line(x, y, legend="User1", line_width=2)
+		#add a line to the plot using x and y values and username as legend
+		p.line(x, y, legend=user, line_width=2)
+
 
 	script, div = components(p)
 	return render_template('graph.html', script=script, div=div, visits=visits)
