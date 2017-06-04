@@ -10,7 +10,7 @@ import datetime
 import redis
 
 # Connect to Redis
-pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
+pool = redis.ConnectionPool(host="redis", port=6379, db=0)
 r = redis.StrictRedis(connection_pool = pool, decode_responses=True)
 #redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
 
