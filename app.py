@@ -43,7 +43,10 @@ def updateScore(user, score):
 	r.sadd("users", user)
 	r.zadd(user, time.time(), score)
 	#t = r.zrange(user, 0, -1)
-	
+	u = r.smembers("users")
+	us = ""
+	for x in u:
+		us = us + " " + x
 	return render_template('graph.html', visits=us)
 
 if __name__ == "__main__":
