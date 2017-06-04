@@ -12,8 +12,8 @@ import redis
 
 # Connect to Redis
 
-r = redis.StrictRedis(host="localhost", decode_responses=True)
-#r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
+#r = redis.StrictRedis(host="localhost", decode_responses=True)
+r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
 
 app = Flask(__name__)
 
@@ -25,7 +25,7 @@ def hello():
 		visits = "<i>cannot connect to Redis, counter disabled</i>"
 
 		# create a new plot with a title and axis labels
-	p = figure(width=1200, height=900, x_axis_type="datetime")
+	p = figure(x_axis_type="datetime", y_axis_label="score")
 
 	colors = ["red", "blue", "green", "black", "orange"]
 	users = r.smembers("users")
@@ -63,4 +63,4 @@ def updateScore(user, score):
 	return render_template('graph.html', visits=us)
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=84)
+	app.run(host='0.0.0.0', port=80)
