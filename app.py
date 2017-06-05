@@ -17,7 +17,7 @@ r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeo
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/graph")
 def hello():
 	try:
 		visits = r.incr("counter")
@@ -51,10 +51,15 @@ def hello():
 	script, div = components(p)
 	return render_template('graph.html', script=script, div=div, visits=visits)
 
+@app.route("/")
+def rank():
+
+
 @app.route('/updatescore/<user>/<int:score>')
 def updateScore(user, score):
 	r.sadd("users", user)
 	r.zadd(user, time.time(), score)
+	r.zadd("ranks", score, user)
 	#t = r.zrange(user, 0, -1)
 	u = r.smembers("users")
 	us = ""
