@@ -28,7 +28,7 @@ def hello():
 		visits = "<i>cannot connect to Redis, counter disabled</i>"
 
 		# create a new plot with a title and axis labels
-	p = figure(width=900, height=800, x_axis_type="datetime", y_axis_label="score")
+	p = figure(x_axis_type="datetime", y_axis_label="score")
 
 	colors = ["red", "blue", "green", "black", "orange"]
 	users = r.smembers("users")
