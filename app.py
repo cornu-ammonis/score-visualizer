@@ -12,8 +12,8 @@ import redis
 
 # Connect to Redis
 
-#r = redis.StrictRedis(host="localhost", decode_responses=True)
-r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
+r = redis.StrictRedis(host="localhost", decode_responses=True)
+#r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
 
 app = Flask(__name__)
 
@@ -53,7 +53,7 @@ def hello():
 
 @app.route("/")
 def rank():
-	htmlbasis = "<div class=\"row\"> <div class=\"col-md-5\"> {username}</div> <div class=\"col-md-5\"> {score} /div></div>"
+	htmlbasis = "<div class=\"row\"> <div class=\"col-md-3\"> {username}</div> <div class=\"col-md-3\"> {score} </div></div>"
 
 	usersranks = r.zrange("ranks", 0, -1)
 
@@ -61,9 +61,9 @@ def rank():
 	for user in usersranks:
 		tmp = htmlbasis[:]
 		score = r.zscore("ranks", user)
-		page += tml.format(username=user, score=score)
+		page += tmp.format(username=user, score=score)
 
-	return render_template('rank.html', ranks=page)
+	return render_template('ranks.html', ranks=page)
 
 
 
@@ -81,4 +81,4 @@ def updateScore(user, score):
 	return render_template('graph.html', visits=us)
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=80)
+	app.run(host='0.0.0.0', port=82)
