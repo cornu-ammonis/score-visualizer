@@ -30,7 +30,7 @@ app = Flask(__name__)
 startdate = dt(2017, 6, 5)
 
 @app.route("/graph")
-def hello():
+def graph():
 	try:
 		visits = r.incr("counter")
 	except RedisError:
