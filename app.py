@@ -17,6 +17,9 @@ r = redis.StrictRedis(host="localhost", decode_responses=True)
 
 app = Flask(__name__)
 
+# NOTE: this forms the starting point for the graph where all scores are assumed to be 0
+startdate = dt(2017, 6, 5)
+
 @app.route("/graph")
 def hello():
 	try:
@@ -35,7 +38,7 @@ def hello():
 	for user in users:
 		y = [0]
 		y.extend(r.zrange(user, 0, -1))
-		x = [dt(2017, 6, 4)]
+		x = [startdate]
 		for _y in y:
 			if _y is not 0:
 				x.append(dt.fromtimestamp(int(r.zscore(user, _y))))
