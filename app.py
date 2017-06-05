@@ -53,9 +53,10 @@ def hello():
 
 @app.route("/")
 def rank():
-	htmlbasis = "<div class=\"row\"> <div class=\"col-md-3\"> {username}</div> <div class=\"col-md-3\"> {score} </div></div>"
+	htmlbasis = "<div class=\"row\"> <div class=\"col-md-3 \"> {username}</div> \
+		<div class=\"col-md-3\"> {score} </div></div>"
 
-	usersranks = r.zrange("ranks", 0, -1)
+	usersranks = r.zrevrange("ranks", 0, -1)
 
 	page = ""
 	for user in usersranks:
