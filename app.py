@@ -9,9 +9,18 @@ import time
 from datetime import datetime as dt
 import redis
 
+"""
+TO DO
+( ) automatically determine the start date on first run 
+( ) include link to graph page on rank page
+( ) better determine graph size
+( ) modify score updating to be secured post request or api call
+( ) include mobile bootstrap column sizes i
+
+"""
+
 
 # Connect to Redis
-
 r = redis.StrictRedis(host="localhost", decode_responses=True)
 #r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
 
