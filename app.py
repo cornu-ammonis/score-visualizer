@@ -53,7 +53,7 @@ def hello():
 
 @app.route("/")
 def rank():
-	htmlbasis = "<div class=\"row\"> <div class=\"col-md-3 \"> {username}</div> \
+	htmlbasis = "<div class=\"row\"> <div class=\"col-md-3 col-md-offset-1 \"> {username}</div> \
 		<div class=\"col-md-3\"> {score} </div></div>"
 
 	usersranks = r.zrevrange("ranks", 0, -1)
