@@ -11,6 +11,7 @@ import redis
 
 """
 TO DO
+( ) documentation
 ( ) automatically determine the start date on first run 
 (x) include link to graph page on rank page
 ( ) better determine graph size
