@@ -53,6 +53,19 @@ def hello():
 
 @app.route("/")
 def rank():
+	htmlbasis = "<div class=\"row\"> <div class=\"col-md-5\"> {username}</div> <div class=\"col-md-5\"> {score} /div></div>"
+
+	usersranks = r.zrange("ranks", 0, -1)
+
+	page = ""
+	for user in usersranks:
+		tmp = htmlbasis[:]
+		score = r.zscore("ranks", user)
+		page += tml.format(username=user, score=score)
+
+	return render_template('rank.html', ranks=page)
+
+
 
 
 @app.route('/updatescore/<user>/<int:score>')
