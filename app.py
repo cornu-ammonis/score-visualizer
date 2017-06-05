@@ -12,7 +12,7 @@ import redis
 """
 TO DO
 ( ) automatically determine the start date on first run 
-( ) include link to graph page on rank page
+(x) include link to graph page on rank page
 ( ) better determine graph size
 ( ) modify score updating to be secured post request or api call
 ( ) include mobile bootstrap column sizes i
