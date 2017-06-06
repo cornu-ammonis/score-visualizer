@@ -19,6 +19,8 @@ TO DO
 ( ) include mobile bootstrap column sizes i
 
 
+( ) make lines stay straight between updates
+
 """
 
 
