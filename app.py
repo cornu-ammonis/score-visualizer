@@ -18,12 +18,13 @@ TO DO
 ( ) modify score updating to be secured post request or api call
 ( ) include mobile bootstrap column sizes i
 
+
 """
 
 
 # Connect to Redis
-#r = redis.StrictRedis(host="localhost", decode_responses=True)
-r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
+r = redis.StrictRedis(host="localhost", decode_responses=True)
+#r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
 
 app = Flask(__name__)
 
@@ -38,7 +39,7 @@ def graph():
 		visits = "<i>cannot connect to Redis, counter disabled</i>"
 
 		# create a new plot with a title and axis labels
-	p = figure(x_axis_type="datetime", y_axis_label="score")
+	p = figure(width=1000, x_axis_type="datetime", y_axis_label="score")
 
 	colors = ["red", "blue", "green", "black", "orange"]
 	users = r.smembers("users")
@@ -46,6 +47,8 @@ def graph():
 	y_list = []
 	c = 0
 	for user in users:
+		#y = r.zrange(user, 0, -1)
+		#x = []
 		y = [0]
 		y.extend(r.zrange(user, 0, -1))
 		x = [startdate]
@@ -54,7 +57,7 @@ def graph():
 				x.append(dt.fromtimestamp(int(r.zscore(user, _y))))
 
 		#add a line to the plot using x and y values and username as legend
-		p.line(x=x, y=y, legend=user, color=colors[c])
+		p.line(x=x, y=y, legend=user, color=colors[c], line_width=3)
 		c += 1
 		
 
@@ -95,4 +98,4 @@ def updateScore(user, score):
 	return render_template('users.html', users=us)
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=80)
+	app.run(host='0.0.0.0', port=82)
