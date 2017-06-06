@@ -20,6 +20,7 @@ TO DO
 
 
 ( ) make lines stay straight between updates
+( ) replace legend with hovering over the lines to display names (js on hover handler for line with id)
 
 """
 
