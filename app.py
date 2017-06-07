@@ -112,22 +112,22 @@ def graph():
 		# that value at the x for the first real scor
 		# SEE COMMENT AT TOP OF FILE
 		y = [0, 0]
-		tmpy = _repo.scoresForUserOverTime(user)
+		scores = _repo.scoresForUserOverTime(user)
 
 		#gives startdate and date of first datapoint
-		x = [startdate, dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[0]))]
+		x = [startdate, dt.fromtimestamp( _repo.timestampForUserScore(user, scores[0]) ) ]
 		
-		for _y in range(len(tmpy)):
+		for _y in range(len(scores)):
 			
 			# this is where the phantom point is created beneath every point except the 
 			# first one - SEE COMMENT AT TOP OF FILE
 			if _y != 0:
-				y.append(tmpy[ _y - 1])
-				x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[ _y ])))
+				y.append(scores[ _y - 1])
+				x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, scores[ _y ])))
 			
 			# this is where the true points get added to the graph
-			y.append(tmpy[_y])
-			x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[ _y ])))
+			y.append(scores[_y])
+			x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, scores[ _y ])))
 
 
 		# recreate last score at current timestamp
