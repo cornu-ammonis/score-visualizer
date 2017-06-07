@@ -61,9 +61,9 @@ class Repository(object):
 
 	# @param user - string uniquely identifying a user 
 	# @param score - a score the user had at one time
-	# @returns - the timestamp for that score (in ms, not datatime)
+	# @returns - the integer timestamp for that score (in ms, not datatime)
 	def timestampForUserScore(self, user, score):
-		return r.zscore(user, score)
+		return int(r.zscore(user, score))
 
 
 
@@ -95,13 +95,14 @@ def graph():
 	y_list = []
 	c = 0
 	for user in users:
-		#y = r.zrange(user, 0, -1)
-		#x = []
+
+		# first two points are 0 because it starts at zero and replicates 
+		# that value at the x for the first real score
 		y = [0, 0]
 		tmpy = _repo.scoresForUserOverTime(user)
 
 		#gives startdate and date of first datapoint
-		x = [startdate, dt.fromtimestamp(int(r.zscore(user, tmpy[0])))]
+		x = [startdate, dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[0]))]
 		for _y in range(len(tmpy)):
 			if _y != 0:
 				y.append(tmpy[ _y - 1])
