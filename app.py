@@ -24,6 +24,25 @@ TO DO
 
 """
 
+# api wrapper for all database interactions
+class Repository(object):
+
+	# updates score for specified user
+	# @param user - string uniquely identifying user
+	# @param score - integer/double representing score
+	def updateScore(self, user, score):
+		# makes sure user is in list of users
+		r.sadd("users", user)
+		
+		# adds score with current timstamp
+		r.zadd(user, time.time(), score)
+		
+		# adds score to the ranking list
+		r.zadd("ranks", score, user)
+
+
+
+_repo = Repository()
 
 # Connect to Redis
 r = redis.StrictRedis(host="localhost", decode_responses=True)
@@ -103,9 +122,7 @@ def rank():
 
 @app.route('/updatescore/<user>/<int:score>')
 def updateScore(user, score):
-	r.sadd("users", user)
-	r.zadd(user, time.time(), score)
-	r.zadd("ranks", score, user)
+	_repo.updateScore(user, score)
 	#t = r.zrange(user, 0, -1)
 	u = r.smembers("users")
 	us = ""
