@@ -69,7 +69,7 @@ def graph():
 	p = figure(width=1000, x_axis_type="datetime", y_axis_label="score")
 
 	colors = ["red", "blue", "green", "black", "orange"]
-	users = r.smembers("users")
+	users = _repo.listUsers()
 	x_list= []
 	y_list = []
 	c = 0
