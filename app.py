@@ -24,6 +24,51 @@ TO DO
 
 """
 
+# api wrapper for all database interactions
+class Repository(object):
+
+	# updates score for specified user
+	# @param user - string uniquely identifying user
+	# @param score - integer/double representing score
+	def updateScore(self, user, score):
+		# makes sure user is in list of users
+		r.sadd("users", user)
+		
+		# adds score with current timstamp
+		r.zadd(user, time.time(), score)
+		
+		# adds score to the ranking list
+		r.zadd("ranks", score, user)
+
+	# @returns a list of all users in the users 'table'
+	def listUsers(self):
+		return r.smembers("users")
+
+	# @returns a list of users sorted from highest score to lowest score
+	def listUsersOrderedByScore(self):
+		return r.zrevrange("ranks", 0, -1)
+
+	# @param user - string uniquely identifying user 
+	# @returns - score for that user 
+	def scoreForUser(self, user):
+		return r.zscore("ranks", user)
+
+	# @param user - string uniquely identifying user
+	# @returns - a list of scores which this user has had. 
+	#    essentially the y values for a scores vs time graph (x values sold separately)
+	def scoresForUserOverTime(self, user):
+		return r.zrange(user, 0, -1)
+
+	# @param user - string uniquely identifying a user 
+	# @param score - a score the user had at one time
+	# @returns - the integer timestamp for that score (in ms, not datatime)
+	def timestampForUserScore(self, user, score):
+		return int(r.zscore(user, score))
+
+
+
+
+_repo = Repository()
 
 # Connect to Redis
 r = redis.StrictRedis(host="localhost", decode_responses=True)
@@ -45,24 +90,25 @@ def graph():
 	p = figure(width=1000, x_axis_type="datetime", y_axis_label="score")
 
 	colors = ["red", "blue", "green", "black", "orange"]
-	users = r.smembers("users")
+	users = _repo.listUsers()
 	x_list= []
 	y_list = []
 	c = 0
 	for user in users:
-		#y = r.zrange(user, 0, -1)
-		#x = []
+
+		# first two points are 0 because it starts at zero and replicates 
+		# that value at the x for the first real score
 		y = [0, 0]
-		tmpy = r.zrange(user, 0, -1)
+		tmpy = _repo.scoresForUserOverTime(user)
 
 		#gives startdate and date of first datapoint
-		x = [startdate, dt.fromtimestamp(int(r.zscore(user, tmpy[0])))]
+		x = [startdate, dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[0]))]
 		for _y in range(len(tmpy)):
 			if _y != 0:
 				y.append(tmpy[ _y - 1])
-				x.append(dt.fromtimestamp(int(r.zscore(user, tmpy[ _y ])) - 1))
+				x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[ _y ])))
 			y.append(tmpy[_y])
-			x.append(dt.fromtimestamp(int(r.zscore(user, tmpy[_y]))))
+			x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[ _y ])))
 
 
 		# recreate last score at current timestamp
@@ -88,12 +134,12 @@ def rank():
 	htmlbasis = "<div class=\"row\"> <div class=\"col-md-3 col-md-offset-4 \"> {username}</div> \
 		<div class=\"col-md-3\"> {score} </div></div>"
 
-	usersranks = r.zrevrange("ranks", 0, -1)
+	usersranks = _repo.listUsersOrderedByScore()
 
 	page = ""
 	for user in usersranks:
 		tmp = htmlbasis[:]
-		score = r.zscore("ranks", user)
+		score = _repo.scoreForUser(user)
 		page += tmp.format(username=user, score=score)
 
 	return render_template('ranks.html', ranks=page)
@@ -103,11 +149,9 @@ def rank():
 
 @app.route('/updatescore/<user>/<int:score>')
 def updateScore(user, score):
-	r.sadd("users", user)
-	r.zadd(user, time.time(), score)
-	r.zadd("ranks", score, user)
+	_repo.updateScore(user, score)
 	#t = r.zrange(user, 0, -1)
-	u = r.smembers("users")
+	u = _repo.listUsers()
 	us = ""
 	for x in u:
 		us = us + " " + x
