@@ -1,0 +1,15 @@
+version: "3"
+services:
+  redis:
+    image: cornuammonis/redisc0re:init
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data:/data
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+networks:
+  webnet:
