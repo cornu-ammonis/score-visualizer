@@ -59,7 +59,11 @@ class Repository(object):
 	def scoresForUserOverTime(self, user):
 		return r.zrange(user, 0, -1)
 
-
+	# @param user - string uniquely identifying a user 
+	# @param score - a score the user had at one time
+	# @returns - the timestamp for that score (in ms, not datatime)
+	def timestampForUserScore(self, user, score):
+		return r.zscore(user, score)
 
 
 
