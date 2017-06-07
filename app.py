@@ -80,8 +80,8 @@ class Repository(object):
 _repo = Repository()
 
 # Connect to Redis
-r = redis.StrictRedis(host="localhost", decode_responses=True)
-#r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
+#r = redis.StrictRedis(host="localhost", decode_responses=True)
+r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
 
 app = Flask(__name__)
 
@@ -180,4 +180,4 @@ def updateScore(user, score):
 	return render_template('users.html', users=us)
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=82)
+	app.run(host='0.0.0.0', port=80)
