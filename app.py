@@ -24,6 +24,15 @@ TO DO
 
 """
 
+
+# THERE IS ONE CONFUSING THING IN THIS FILE - the graph method employs some trickery to make the graph lines
+# step between values rather than sloping. it does this by creating two points for every score - one with
+# the timestamp at which the user reached that score, and one with the timestamp at which the user reached 
+# another score. it does this so that there will be a straight line between the two time-endpoints at which
+# the user had a particular score, and then a line will be drawn between the "phantom" point and the next score's 
+# starting point, making the graph step. 
+
+
 # api wrapper for all database interactions
 class Repository(object):
 
