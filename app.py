@@ -79,6 +79,9 @@ app = Flask(__name__)
 # NOTE: this forms the starting point for the graph where all scores are assumed to be 0
 startdate = dt(2017, 6, 5)
 
+
+
+# displays the scores over time graph
 @app.route("/graph")
 def graph():
 	try:
@@ -129,6 +132,8 @@ def graph():
 	script, div = components(p)
 	return render_template('graph.html', script=script, div=div, visits=visits)
 
+
+# displays sorted scoreboard of users with their scores
 @app.route("/")
 def rank():
 	htmlbasis = "<div class=\"row\"> <div class=\"col-md-3 col-md-offset-4 \"> {username}</div> \
@@ -147,6 +152,7 @@ def rank():
 
 
 
+# updates a user's score
 @app.route('/updatescore/<user>/<int:score>')
 def updateScore(user, score):
 	_repo.updateScore(user, score)
