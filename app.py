@@ -103,8 +103,8 @@ def graph():
 
 	colors = ["red", "blue", "green", "black", "orange"]
 	users = _repo.listUsers()
-	x_list= []
-	y_list = []
+
+	# tracks which colors we've used
 	c = 0
 	for user in users:
 
@@ -124,6 +124,8 @@ def graph():
 			if _y != 0:
 				y.append(tmpy[ _y - 1])
 				x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[ _y ])))
+			
+			# this is where the true points get added to the graph
 			y.append(tmpy[_y])
 			x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[ _y ])))
 
