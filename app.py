@@ -53,6 +53,14 @@ class Repository(object):
 	def scoreForUser(self, user):
 		return r.zscore("ranks", user)
 
+	# @param user - string uniquely identifying user
+	# @returns - a list of scores which this user has had. 
+	#    essentially the y values for a scores vs time graph (x values sold separately)
+	def scoresForUserOverTime(self, user):
+		return r.zrange(user, 0, -1)
+
+
+
 
 
 
@@ -86,7 +94,7 @@ def graph():
 		#y = r.zrange(user, 0, -1)
 		#x = []
 		y = [0, 0]
-		tmpy = r.zrange(user, 0, -1)
+		tmpy = _repo.scoresForUserOverTime()
 
 		#gives startdate and date of first datapoint
 		x = [startdate, dt.fromtimestamp(int(r.zscore(user, tmpy[0])))]
