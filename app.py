@@ -17,7 +17,7 @@ TO DO
 ( ) better determine graph size
 ( ) modify score updating to be secured post request or api call
 ( ) include mobile bootstrap column sizes i
-
+( ) more colors for lines
 
 ( ) make lines stay straight between updates
 ( ) replace legend with hovering over the lines to display names (js on hover handler for line with id)
