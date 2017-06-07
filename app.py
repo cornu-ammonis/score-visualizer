@@ -52,15 +52,28 @@ def graph():
 	for user in users:
 		#y = r.zrange(user, 0, -1)
 		#x = []
-		y = [0]
-		y.extend(r.zrange(user, 0, -1))
-		x = [startdate]
-		for _y in y:
-			if _y is not 0:
-				x.append(dt.fromtimestamp(int(r.zscore(user, _y))))
+		y = [0, 0]
+		tmpy = r.zrange(user, 0, -1)
+
+		#gives startdate and date of first datapoint
+		x = [startdate, dt.fromtimestamp(int(r.zscore(user, tmpy[0])))]
+		for _y in range(len(tmpy)):
+			if _y != 0:
+				y.append(tmpy[ _y - 1])
+				x.append(dt.fromtimestamp(int(r.zscore(user, tmpy[ _y ])) - 1))
+			y.append(tmpy[_y])
+			x.append(dt.fromtimestamp(int(r.zscore(user, tmpy[_y]))))
+
+
+		# recreate last score at current timestamp
+		x.append(dt.fromtimestamp(time.time()))
+		y.append(y[len(y) - 1])
+			
+
+
 
 		#add a line to the plot using x and y values and username as legend
-		p.line(x=x, y=y, legend=user, color=colors[c], line_width=3)
+		p.line(x=x, y=y, legend=user, color=colors[c], line_width=2)
 		c += 1
 		
 
