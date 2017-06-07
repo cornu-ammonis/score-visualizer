@@ -108,7 +108,7 @@ def graph():
 				y.append(tmpy[ _y - 1])
 				x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[ _y ])))
 			y.append(tmpy[_y])
-			x.append(dt.fromtimestamp(int(r.zscore(user, tmpy[_y]))))
+			x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[ _y ])))
 
 
 		# recreate last score at current timestamp
