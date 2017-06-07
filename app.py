@@ -48,6 +48,11 @@ class Repository(object):
 	def listUsersOrderedByScore(self):
 		return r.zrevrange("ranks", 0, -1)
 
+	# @param user - string uniquely identifying user 
+	# @returns - score for that user 
+	def scoreForUser(self, user):
+		return r.zscore("ranks", user)
+
 
 
 
@@ -121,7 +126,7 @@ def rank():
 	page = ""
 	for user in usersranks:
 		tmp = htmlbasis[:]
-		score = r.zscore("ranks", user)
+		score = _repo.scoreForUser()
 		page += tmp.format(username=user, score=score)
 
 	return render_template('ranks.html', ranks=page)
