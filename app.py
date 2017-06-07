@@ -126,7 +126,7 @@ def rank():
 	page = ""
 	for user in usersranks:
 		tmp = htmlbasis[:]
-		score = _repo.scoreForUser()
+		score = _repo.scoreForUser(user)
 		page += tmp.format(username=user, score=score)
 
 	return render_template('ranks.html', ranks=page)
