@@ -40,6 +40,11 @@ class Repository(object):
 		# adds score to the ranking list
 		r.zadd("ranks", score, user)
 
+	# @returns a list of all users in the users 'table'
+	def listUsers(self):
+		return r.smembers("users")
+
+
 
 
 _repo = Repository()
@@ -124,7 +129,7 @@ def rank():
 def updateScore(user, score):
 	_repo.updateScore(user, score)
 	#t = r.zrange(user, 0, -1)
-	u = r.smembers("users")
+	u = _repo.listUsers()
 	us = ""
 	for x in u:
 		us = us + " " + x
