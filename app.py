@@ -73,7 +73,7 @@ def graph():
 
 
 		#add a line to the plot using x and y values and username as legend
-		p.line(x=x, y=y, legend=user, color=colors[c], line_width=3)
+		p.line(x=x, y=y, legend=user, color=colors[c], line_width=2)
 		c += 1
 		
 
