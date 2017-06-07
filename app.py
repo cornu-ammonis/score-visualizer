@@ -109,13 +109,18 @@ def graph():
 	for user in users:
 
 		# first two points are 0 because it starts at zero and replicates 
-		# that value at the x for the first real score
+		# that value at the x for the first real scor
+		# SEE COMMENT AT TOP OF FILE
 		y = [0, 0]
 		tmpy = _repo.scoresForUserOverTime(user)
 
 		#gives startdate and date of first datapoint
 		x = [startdate, dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[0]))]
+		
 		for _y in range(len(tmpy)):
+			
+			# this is where the phantom point is created beneath every point except the 
+			# first one - SEE COMMENT AT TOP OF FILE
 			if _y != 0:
 				y.append(tmpy[ _y - 1])
 				x.append(dt.fromtimestamp(_repo.timestampForUserScore(user, tmpy[ _y ])))
