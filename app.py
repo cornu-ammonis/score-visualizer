@@ -8,6 +8,7 @@ import socket
 import time
 from datetime import datetime as dt
 import redis
+import secrets
 
 """
 TO DO
@@ -80,8 +81,8 @@ class Repository(object):
 _repo = Repository()
 
 # Connect to Redis
-#r = redis.StrictRedis(host="localhost", decode_responses=True)
-r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
+r = redis.StrictRedis(host="localhost", decode_responses=True, password=secrets.redispw)
+#r = redis.StrictRedis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2, decode_responses=True)
 
 app = Flask(__name__)
 
@@ -98,8 +99,8 @@ def graph():
 	except RedisError:
 		visits = "<i>cannot connect to Redis, counter disabled</i>"
 
-		# create a new plot with a title and axis labels
-	p = figure(width=1000, x_axis_type="datetime", y_axis_label="score")
+	# create a new plot with a title and axis labels
+	p = figure(width=1000, x_axis_type="datetime", y_axis_label="score", title="scores over time")
 
 	colors = ["red", "blue", "green", "black", "orange"]
 	users = _repo.listUsers()
@@ -140,10 +141,6 @@ def graph():
 		#add a line to the plot using x and y values and username as legend
 		p.line(x=x, y=y, legend=user, color=colors[c], line_width=2)
 		c += 1
-		
-
-		
-
 	
 	script, div = components(p)
 	return render_template('graph.html', script=script, div=div, visits=visits)
@@ -180,4 +177,4 @@ def updateScore(user, score):
 	return render_template('users.html', users=us)
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=80)
+	app.run(host='0.0.0.0', port=82)
