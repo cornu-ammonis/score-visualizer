@@ -94,7 +94,7 @@ def graph():
 		#y = r.zrange(user, 0, -1)
 		#x = []
 		y = [0, 0]
-		tmpy = _repo.scoresForUserOverTime()
+		tmpy = _repo.scoresForUserOverTime(user)
 
 		#gives startdate and date of first datapoint
 		x = [startdate, dt.fromtimestamp(int(r.zscore(user, tmpy[0])))]
