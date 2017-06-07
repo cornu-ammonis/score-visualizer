@@ -44,6 +44,10 @@ class Repository(object):
 	def listUsers(self):
 		return r.smembers("users")
 
+	# @returns a list of users sorted from highest score to lowest score
+	def listUsersOrderedByScore(self):
+		return r.zrevrange("ranks", 0, -1)
+
 
 
 
@@ -112,7 +116,7 @@ def rank():
 	htmlbasis = "<div class=\"row\"> <div class=\"col-md-3 col-md-offset-4 \"> {username}</div> \
 		<div class=\"col-md-3\"> {score} </div></div>"
 
-	usersranks = r.zrevrange("ranks", 0, -1)
+	usersranks = _repo.listUsersOrderedByScore()
 
 	page = ""
 	for user in usersranks:
