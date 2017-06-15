@@ -12,16 +12,20 @@ html
 		script.
 			$(document).ready(function() {
 			d3.json('/testdata', function(data) {
+				for (var i = 0; i < data.points.length; i++) {
+				data.points[i] = MG.convert.date(data.points[i], 'date', '%Y-%m-%d-%H-%M');
+				}
+
 			MG.data_graphic({
-			  title: "UFO Sightings",
-			  description: "Yearly UFO sightings from 1945 to 2010.",
-			  data: data,
-			  markers: [{'year': 1964, 'label': '"The Creeping Terror" released'}],
-			  width: 400,
-			  height: 250,
+			  title: "Multi Line",
+			  description: "contains multiple lines.",
+			  data: data.points,
+			  width: 800,
+			  height: 500,
 			  target: "#target",
-			  x_accessor: "year",
-			  y_accessor: "sightings", })})})
+			  legend: data.users,
+			  legend_target: '#legend'
+				})})})
 			
 
 
@@ -29,4 +33,5 @@ html
 	body
 		p message
 		div#target
+		div#legend
 
