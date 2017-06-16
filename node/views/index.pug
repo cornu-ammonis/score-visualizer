@@ -1,0 +1,36 @@
+html
+	head
+		style
+			include ../dist/metricsgraphics.css
+
+
+		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' ) 
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min.js')
+		script 
+			include ../dist/metricsgraphics.min.js
+
+		script.
+			$(document).ready(function() {
+			d3.json('/testdata', function(data) {
+				for (var i = 0; i < data.points.length; i++) {
+				data.points[i] = MG.convert.date(data.points[i], 'date', '%Y-%m-%d-%H-%M');
+				}
+
+			MG.data_graphic({
+			  title: "Scores over time",
+			  description: "this graph shows scores over time for project 1",
+			  data: data.points,
+			  width: 800,
+			  height: 500,
+			  target: "#target",
+			  legend: data.users,
+			  legend_target: '#legend'
+				})})})
+			
+
+
+
+	body
+		div#target
+		div#legend
+
