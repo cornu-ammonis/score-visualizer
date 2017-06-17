@@ -66,6 +66,8 @@ module.exports = {
 				data.points.push([{date: dateString, value: score}]);
 			}
 		}
+
+		this.updateUserRank(user, score);
 	}, 
 
 	// attempts to read in data from ./data/userscores.json - returns a list of 
