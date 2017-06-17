@@ -8,7 +8,8 @@ console.log(repository.getCurrentDateString());
 
 app.set('view engine', 'pug');
 
-
+let tester = require('./testing.js');
+tester.seedDataToUserScoresFile(repository, fs);
 
 app.get('/', function (req, res) {
 
