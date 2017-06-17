@@ -1,5 +1,6 @@
 let fs = require('fs');
 const repository = require('./repository.js');
+const hash = require('md5');
 
 exports.seed = function () {
 	let tester = require('./testing.js');
@@ -40,4 +41,19 @@ exports.getRanks = function (req, res) {
 	}
 
 	res.render('ranks', {users: data});
+}
+
+exports.updateScore = function (req, res) {
+	let pwhash = require('./data/secret.json');
+	let givenPwHash = hash(req.params['pw']);
+	console.log(pwhash);
+	console.log(givenPwHash);
+
+	if (pwhash.pw === givenPwHash) {
+		repository.addScoreToUser(req.params['username'], req.params['score']);
+		res.send('success');
+	}
+	else {
+		res.send('invalid password token');
+	}
 }
