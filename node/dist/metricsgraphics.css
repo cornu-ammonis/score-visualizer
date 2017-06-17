@@ -1,3 +1,82 @@
+.mg-line6-color {
+    stroke: steelblue;
+}
+
+.mg-area6-color {
+    fill: steelblue;
+}
+
+.mg-hover-line6-color {
+    fill: steelblue;
+}
+
+.mg-line6-legend-color {
+    color: steelblue;
+}
+
+.mg-line7-color {
+    stroke: blueviolet;
+}
+
+.mg-area7-color {
+    fill: blueviolet;
+}
+
+.mg-hover-line7-color {
+    fill: blueviolet;
+}
+
+.mg-line7-legend-color {
+    color: blueviolet;
+}
+
+.mg-line8-color {
+    stroke: fuchsia;
+}
+
+.mg-area8-color {
+    fill: fuchsia;
+}
+
+.mg-hover-line8-color {
+    fill: fuchsia;
+}
+
+.mg-line8-legend-color {
+    color: fuchsia;
+}
+
+.mg-line9-color {
+    stroke: darksalmon;
+}
+
+.mg-area9-color {
+    fill: darksalmon;
+}
+
+.mg-hover-line9-color {
+    fill: darksalmon;
+}
+
+.mg-line9-legend-color {
+    color: darksalmon;
+}
+
+.mg-line10-color {
+    stroke: chartreuse;
+}
+
+.mg-area10-color {
+    fill: chartreuse;
+}
+
+.mg-hover-line10-color {
+    fill: chartreuse;
+}
+
+.mg-line10-legend-color {
+    color: chartreuse;
+}
 .mg-active-datapoint {
     fill: black;
     font-size: 0.9rem;
