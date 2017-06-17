@@ -26,3 +26,18 @@ exports.getScores = function (req, res) {
 
 	res.send(JSON.stringify(data));
 }
+
+exports.getRanks = function (req, res) {
+	let data = repository.retrieveUserRanks();
+
+	if (data === null) {
+		res.send('no ranks found');
+		return
+	}
+
+	if (data === undefined) {
+		res.send('something went wrong reading ranks from disk');
+	}
+
+	res.render('ranks', {users: data});
+}
