@@ -8,7 +8,7 @@ module.exports = {
 
 		return dateString;
 	}, 
-	
+
 	addScoreToUser : function(user, score) {
 		let dateString = this.getCurrentDateString();
 
@@ -36,5 +36,25 @@ module.exports = {
 				data.points.push([{date: dateString, value: score}]);
 			}
 		}
+	}, 
+
+	// attempts to read in data from ./data/userscores.json - returns a list of 
+	//    objects with points -- a list of lists of points -- and users, usernames corresponding
+	//    to the respective index in .points
+	// if no file is found, returns null. if something goes wrong reading in the value, returns nothing (undefined)
+	retrieveUserScores : function () {
+
+		// no file, return null
+		if (!this.fs.existsSync('./data/userscores.json')) {
+			return null;
+		}
+
+		try {
+			return require('./data/userscores.json');
+		}
+		catch (e) {
+			console.log (e.message);
+		}
+
 	}
 }
