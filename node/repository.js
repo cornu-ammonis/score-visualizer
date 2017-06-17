@@ -9,6 +9,36 @@ module.exports = {
 		return dateString;
 	}, 
 
+	updateUserRank : function (userName, score) {
+		if (!this.fs.existsSync('./data/userranks.json')) {
+			let dataList = [];
+			let user = {name: userName, score: score};
+			dataList.push(user);
+			fs.writeFileSync('./data/userranks.json', JSON.stringify(dataList));
+		}
+		else {
+			let dataList = require('./data/userranks.json');
+
+			let alreadyExisted = false;
+
+			for (let i = 0; i < dataList.length; i++) {
+				
+				// user already in list; update their score
+				if (dataList[i].name === userName) {
+					alreadyExisted = true;
+					dataList[i].score = score;
+				}
+			}
+
+			if (!alreadyExisted) {
+				let user = {name: userName, score: score};
+				dataList.push(user);
+			}
+
+			fs.writeFileSync('./data/userranks.json', JSON.stringify(dataList));
+		}
+	},
+
 	addScoreToUser : function(user, score) {
 		let dateString = this.getCurrentDateString();
 
