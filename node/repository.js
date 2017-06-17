@@ -88,5 +88,18 @@ module.exports = {
 			console.log (e.message);
 		}
 
+	},
+
+	retrieveUserRanks : function () {
+		if (!this.fs.existsSync('./data/userranks.json')) {
+			return null;
+		}
+
+		try {
+			return require('./data/userscores.json');
+		}
+		catch (e) {
+			console.log(e.message);
+		}
 	}
 }
