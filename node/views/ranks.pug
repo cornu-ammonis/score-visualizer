@@ -1,0 +1,12 @@
+html 
+	head
+		title= title
+	body
+		h1= title
+		a(href= addCharacterUrl) add a character
+		for pc in pcs
+			h2= pc.name
+			<h4> HP: #{pc.currenthp} / #{pc.maxhp} </h4>
+			p STR: <u>#{pc.str}</u> &nbsp INT: <u>#{pc.int}</u>
+			p DEX: <u>#{pc.dex}</u> &nbsp WIS: <u>#{pc.wis}</u>
+			p CON: <u>#{pc.con}</u> &nbsp CHA: <u>#{pc.cha}</u>
