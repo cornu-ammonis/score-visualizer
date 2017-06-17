@@ -35,6 +35,11 @@ module.exports = {
 				dataList.push(user);
 			}
 
+			// sort by score descending
+			dataList.sort(function(a, b) {
+				return b.score - a.score;
+			})
+
 			this.fs.writeFileSync('./data/userranks.json', JSON.stringify(dataList));
 		}
 	},
