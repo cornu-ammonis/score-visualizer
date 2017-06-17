@@ -44,14 +44,38 @@ exports.getRanks = function (req, res) {
 }
 
 exports.updateScore = function (req, res) {
+	
 	let pwhash = require('./data/secret.json');
+	let pw = req.params['pw'];
+
+	if (pw === undefined) {
+		res.end('must provide a password as first query parameter');
+	}
+
 	let givenPwHash = hash(req.params['pw']);
-	console.log(pwhash);
-	console.log(givenPwHash);
 
 	if (pwhash.pw === givenPwHash) {
-		repository.addScoreToUser(req.params['username'], req.params['score']);
-		res.send('success');
+		
+		let username = req.params['username'];
+		
+		if (username === undefined) {
+			res.end('no username given');
+		}
+
+		let score = req.params['score'];
+		
+		if (score === undefined) {
+			res.end('no score given');
+		}
+		
+
+		if (isNaN(score)) {
+			res.end('score must be a number');
+		}
+
+
+		repository.addScoreToUser(username, score);
+		res.end('success');
 	}
 	else {
 		res.send('invalid password token');
