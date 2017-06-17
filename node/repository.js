@@ -14,7 +14,7 @@ module.exports = {
 			let dataList = [];
 			let user = {name: userName, score: score};
 			dataList.push(user);
-			fs.writeFileSync('./data/userranks.json', JSON.stringify(dataList));
+			this.fs.writeFileSync('./data/userranks.json', JSON.stringify(dataList));
 		}
 		else {
 			let dataList = require('./data/userranks.json');
@@ -35,7 +35,7 @@ module.exports = {
 				dataList.push(user);
 			}
 
-			fs.writeFileSync('./data/userranks.json', JSON.stringify(dataList));
+			this.fs.writeFileSync('./data/userranks.json', JSON.stringify(dataList));
 		}
 	},
 
