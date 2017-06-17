@@ -9,27 +9,9 @@ app.set('view engine', 'pug');
 
 
 
-app.get('/', function (req, res) {
+app.get('/', controller.index);
 
-	res.render('index', {message: ""});
-});
-
-app.get('/testdata', function(req, res) {
-	let data = repository.retrieveUserScores();
-
-	// error conditions
-	if (data === null) {
-		res.send('no scores found -- probably none have been submitted yet');
-		return;
-	}
-	if (data === undefined) {
-		res.send('something went wrong reading in scores from disk. consult error logs');
-		return;
-	}
-
-
-	res.send(JSON.stringify(data));
-})
+app.get('/testdata', controller.getScores);
 
 let port = 3000;
 
