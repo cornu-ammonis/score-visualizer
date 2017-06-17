@@ -8,12 +8,13 @@ controller.seed();
 app.set('view engine', 'pug');
 
 
-
 app.get('/', controller.index);
 
 app.get('/testdata', controller.getScores);
 
 app.get('/ranks', controller.getRanks);
+
+app.get('/updatescore/:pw/:username/:score', controller.updateScore);
 
 let port = 3000;
 
