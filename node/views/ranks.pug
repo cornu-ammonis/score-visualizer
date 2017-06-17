@@ -3,9 +3,7 @@ html
 		title= title
 	body
 		h1= title
-		a(href= /) see scores over time
+		
 		for user in users
-			p 
-				user.name 
-				| &nbsp
-				user.score
+			p  #{user.name}  #{user.score}
+
