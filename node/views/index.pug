@@ -18,13 +18,13 @@ html
 
 			MG.data_graphic({
 			  title: "Scores over time",
-			  description: "this graph shows scores over time for project 1",
 			  data: data.points,
-			  width: 800,
-			  height: 500,
+			  width: 1000,
+			  height: 625,
 			  target: "#target",
 			  legend: data.users,
-			  legend_target: '#legend'
+			  legend_target: '#legend',
+			  interpolate:   d3.curveMonotoneX
 				})})})
 			
 
