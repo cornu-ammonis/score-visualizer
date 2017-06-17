@@ -1,4 +1,4 @@
-
+TO DO: log errors to a text file. 
 TO DO: add more colors for additional lines as per 
 
 https://github.com/mozilla/metrics-graphics/wiki
