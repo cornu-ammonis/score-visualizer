@@ -96,7 +96,7 @@ module.exports = {
 		}
 
 		try {
-			return require('./data/userscores.json');
+			return require('./data/userranks.json');
 		}
 		catch (e) {
 			console.log(e.message);
