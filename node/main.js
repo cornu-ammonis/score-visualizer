@@ -2,14 +2,12 @@
 
 const express = require('express');
 const app = express();
-let fs = require('fs');
-let repository = require('./repository.js');
-console.log(repository.getCurrentDateString());
+const controller = require('./controller');
+controller.seed();
 
 app.set('view engine', 'pug');
 
-let tester = require('./testing.js');
-tester.seedDataToUserScoresFile(repository, fs);
+
 
 app.get('/', function (req, res) {
 
