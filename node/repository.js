@@ -118,8 +118,13 @@ module.exports = {
 
 	// TOP_SECRET//ICTERUSPIPIEST/UNRASPYMERCY//C0RE	1497913534	UNIXAddress(None)	1
 
+	// TO DO - optimize to do it all in memory rather than i/o
 	convertLineToScore : function(line, subtractForIncorrect, TotalPoints) {
-		console.log(line);
+		let users = this.retrieveUserRanks();
+		let linearr = line.split('\t');
+		let flagwords = line.split('/');
+		let userName = flagwords[3];
+		console.log(userName);
 	}, 
 
 	// currently hard coded for the reverse assignment, needs to be generalized
