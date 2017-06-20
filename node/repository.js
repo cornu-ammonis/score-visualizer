@@ -106,5 +106,13 @@ module.exports = {
 		catch (e) {
 			console.log(e.message);
 		}
+	} ,
+
+	convertTsToDate : function(unixTimeStamp) {
+		let date = Date(unixTimeStamp*1000);
+		let dateString = "" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "-" + 
+			(date.getHours() + 1) + "-" + (date.getMinutes() + 1);
+
+		return dateString;
 	}
 }
