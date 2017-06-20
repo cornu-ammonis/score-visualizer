@@ -119,13 +119,17 @@ module.exports = {
 	// TOP_SECRET//ICTERUSPIPIEST/UNRASPYMERCY//C0RE	1497913534	UNIXAddress(None)	1
 
 	convertLineToScore : function(line, subtractForIncorrect, TotalPoints) {
-
+		console.log(line);
 	}, 
 
 	// currently hard coded for the reverse assignment, needs to be generalized
 	readScoresFromSolvedFile : function() {
 		if (this.fs.existsSync('./data/solved.txt')) {
-			this.fs.readFileSync('./data/solved.txt').toString().split('\n').forEach(this.convertLineToScore(line));
+			let arr = this.fs.readFileSync('./data/solved.txt').toString().split('\n');
+
+			for (let i = 0; i < arr.length; i++) {
+				this.convertLineToScore(arr[i], true, 10);
+			}
 		}
 	}
 }
