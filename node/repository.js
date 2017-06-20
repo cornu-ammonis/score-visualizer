@@ -114,5 +114,18 @@ module.exports = {
 			(date.getHours() + 1) + "-" + (date.getMinutes() + 1);
 
 		return dateString;
+	},
+
+	// TOP_SECRET//ICTERUSPIPIEST/UNRASPYMERCY//C0RE	1497913534	UNIXAddress(None)	1
+
+	convertLineToScore : function(line, subtractForIncorrect, TotalPoints) {
+
+	}, 
+
+	// currently hard coded for the reverse assignment, needs to be generalized
+	readScoresFromSolvedFile : function() {
+		if (this.fs.existsSync('./data/solved.txt')) {
+			this.fs.readFileSync('./data/solved.txt').toString().split('\n').forEach(this.convertLineToScore(line));
+		}
 	}
 }
