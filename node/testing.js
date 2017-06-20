@@ -16,7 +16,7 @@ module.exports = {
 		data2[2] = {date: "2017-6-03-03-07", value: 10 };
 		data2[3] = {date: "2017-6-04-06-05", value: 15 };
 		data2[4] = {date: "2017-6-05-02-07", value: 20 };
-		data2[5] = {date: "2017-6-06-03-07", value: 25 };
+		data2[5] = {date: "2017-6-19-19-24", value: 25 };
 
 		var data3 = [];
 		var data4 = []
@@ -85,5 +85,11 @@ module.exports = {
 		repository.addScoreToUser('eight eight', 35);
 		repository.addScoreToUser('seven', 40);
 		repository.addScoreToUser('eleven', 25);
+	},
+
+	testUnixTs : function() {
+		let repository = require('./repository');
+		console.log('testing repositroy converTsToDate function...');
+		console.log(repository.convertTsToDate("1497910987"));
 	}
 }

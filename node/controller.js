@@ -5,6 +5,7 @@ const hash = require('md5');
 exports.seed = function () {
 	let tester = require('./testing.js');
 	tester.seedDataToUserScoresFile(repository, fs);
+	tester.testUnixTs();
 }
 
 exports.index = function(req, res) {
