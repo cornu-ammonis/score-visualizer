@@ -44,8 +44,7 @@ module.exports = {
 		}
 	},
 
-	addScoreToUser : function(user, score) {
-		let dateString = this.getCurrentDateString();
+	addScoreToUser : function(user, score, dateString = this.getCurrentDateString() ) {
 
 		if(!this.fs.existsSync('./data/userscores.json')) {
 			let data = {users: [], points: []};
@@ -74,6 +73,7 @@ module.exports = {
 
 		this.updateUserRank(user, score);
 	}, 
+
 
 	// attempts to read in data from ./data/userscores.json - returns a list of 
 	//    objects with points -- a list of lists of points -- and users, usernames corresponding
