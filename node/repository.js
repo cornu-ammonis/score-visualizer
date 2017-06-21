@@ -145,7 +145,7 @@ module.exports = {
 		}
 
 
-	}
+	},
 
 	// currently hard coded for the reverse assignment, needs to be generalized
 	readScoresFromSolvedFile : function() {
@@ -167,10 +167,21 @@ module.exports = {
 					for (let j = 0; j < aliases.users.length; j++) {
 						if (aliases.users[i] === userName) {
 							isAlias = false;
-							this.convertLineToScore(arr[i], true, 10)
+							this.convertLineToScore(arr[i])
 						}
 					}
-					this.convertLineToScore(arr[i], true, 10);
+
+					if (isAlias) {
+						for (let j = 0; j < aliases.users.length; j++) {
+							for (let k = 0; k < aliases.aliases[j].length; k++) {
+								if (aliases.aliases[j][k] === userName) {
+									this.convertLineToScore(arr[i], aliases.users[j]);
+									return;
+								}
+							}
+						}
+					}
+					//this.convertLineToScore(arr[i], true, 10);
 				}
 				
 			}
