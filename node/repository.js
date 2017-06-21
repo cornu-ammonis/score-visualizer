@@ -128,49 +128,44 @@ module.exports = {
 
 	// TOP_SECRET//ICTERUSPIPIEST/UNRASPYMERCY//C0RE	1497913534	UNIXAddress(None)	1
 
-	// TO DO - optimize to do it all in memory rather than i/o
-	convertLineToScore : function(line, subtractForIncorrect, TotalPoints) {
-		let users = this.retrieveUserRanks();
+
+
+	convertLineToScore : function(line, userName = undefined) {
 		let linearr = line.split('\t');
 		let flagwords = line.split('/');
-		let userName = flagwords[3];
+		if (userName === undefined) {
+			userName = flagwords[3];
+		}
+		
 
-		let userAlreadyRecorded = false;
-		let usersCurrentScore = -1;
-		if (users) {
-			for (let i = 0; i < users.length; i++) {
-			if (users[i].name === userName) {
-				userAlreadyRecorded = true;
-				usersCurrentScore = users[i].score;
-				break;
-			}
-		}
-		}
-
-		// new user - initialize with a 0 value and then give current value
-		if (!userAlreadyRecorded) {
-			this.addScoreToUser(userName, 0, "2017-6-19-00-00");
-			let score = 10 - (.2 * (parseInt(linearr[3]) - 1));
-			score = Math.round(score*10)/10;
-			//console.log(score);
-			this.addScoreToUser(userName, score, this.convertTsToDate(linearr[1]))
-		}
-		else {
-			/*let score = usersCurrentScore - (.2 * (parseInt(linearr[3])));
-			score = Math.round(score*10)/10;
-			this.addScoreToUser(userName, score, this.convertTsToDate(linearr[1])); */
-			//return;
-		}
-		console.log(userName);
-	}, 
+	}
 
 	// currently hard coded for the reverse assignment, needs to be generalized
 	readScoresFromSolvedFile : function() {
 		if (this.fs.existsSync('./data/solved.txt')) {
 			let arr = this.fs.readFileSync('./data/solved.txt').toString().split('\n');
-
+			let aliases = require('./data/aliases.json');
+			let seen = {};
 			for (let i = 0; i < arr.length; i++) {
-				this.convertLineToScore(arr[i], true, 10);
+				let line = arr[i];
+				let linearr = line.split('\t');
+				let flagwords = line.split('/');
+				let userName = flagwords[3];
+				if (seen[userName]) {
+					continue;
+				}
+				else {
+					seen[userName] = true;
+					let isAlias = true;
+					for (let j = 0; j < aliases.users.length; j++) {
+						if (aliases.users[i] === userName) {
+							isAlias = false;
+							this.convertLineToScore(arr[i], true, 10)
+						}
+					}
+					this.convertLineToScore(arr[i], true, 10);
+				}
+				
 			}
 		}
 	}
