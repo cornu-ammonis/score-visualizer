@@ -137,8 +137,8 @@ module.exports = {
 		// not an alias - so initialize their 0 score and name
 		if (userName === undefined) {
 			userName = flagwords[3];
-			this.addScoreToUser(userName, 0, "2017-6-19-00-00");
-			this.addScoreToUser(userName, score, this.convertTsToDate(linearr[1]));
+			this.addScoreToUser(userName, 0, "2017-6-18-00-00");
+			this.addScoreToUser(userName, 10, this.convertTsToDate(linearr[1]));
 		}
 		else {
 			this.addScoreToUser(userName, 20, this.convertTsToDate(linearr[1]));
@@ -165,18 +165,19 @@ module.exports = {
 					seen[userName] = true;
 					let isAlias = true;
 					for (let j = 0; j < aliases.users.length; j++) {
-						if (aliases.users[i] === userName) {
+						if (aliases.users[j] === userName) {
 							isAlias = false;
 							this.convertLineToScore(arr[i])
 						}
 					}
 
 					if (isAlias) {
+						console.log("alias: " + userName);
 						for (let j = 0; j < aliases.users.length; j++) {
 							for (let k = 0; k < aliases.aliases[j].length; k++) {
 								if (aliases.aliases[j][k] === userName) {
 									this.convertLineToScore(arr[i], aliases.users[j]);
-									return;
+									break;
 								}
 							}
 						}
