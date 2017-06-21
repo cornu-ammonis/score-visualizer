@@ -129,14 +129,21 @@ module.exports = {
 	// TOP_SECRET//ICTERUSPIPIEST/UNRASPYMERCY//C0RE	1497913534	UNIXAddress(None)	1
 
 
-
+ 	// TO DO - pull current score to increment it 
 	convertLineToScore : function(line, userName = undefined) {
 		let linearr = line.split('\t');
 		let flagwords = line.split('/');
+		
+		// not an alias - so initialize their 0 score and name
 		if (userName === undefined) {
 			userName = flagwords[3];
+			this.addScoreToUser(userName, 0, "2017-6-19-00-00");
+			this.addScoreToUser(userName, score, this.convertTsToDate(linearr[1]));
 		}
-		
+		else {
+			this.addScoreToUser(userName, 20, this.convertTsToDate(linearr[1]));
+		}
+
 
 	}
 
