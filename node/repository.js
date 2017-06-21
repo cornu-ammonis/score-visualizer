@@ -53,15 +53,23 @@ module.exports = {
 			points = []; 
 			points[0] = {date: dateString, value: score};
 			data.points.push(points);
-			fs.writeFileSync('./data/userscores.json', JSON.stringify(data));
+			this.fs.writeFileSync('./data/userscores.json', JSON.stringify(data));
 		}
 		else {
 			let data = require('./data/userscores.json');
 			let userAlreadyExisted = false;
 			for (let i = 0; i < data.users.length; i++) {
 				if (data.users[i] === user) {
+					console.log('data - ' + data.users[i]);
+					console.log(user);
 					userAlreadyExisted = true;
-					data.points[i].push({date: dateString, value: score});
+					if (data.points[i] === undefined) {
+						data.points[i] = [{date: dateString, value: score}];
+					}
+					else {
+						data.points[i].push({date: dateString, value: score});
+					}
+					
 				}
 			}
 
@@ -69,6 +77,8 @@ module.exports = {
 				data.users.push(user);
 				data.points.push([{date: dateString, value: score}]);
 			}
+
+			this.fs.writeFileSync('./data/userscores.json', JSON.stringify(data));
 		}
 
 		this.updateUserRank(user, score);
@@ -124,6 +134,33 @@ module.exports = {
 		let linearr = line.split('\t');
 		let flagwords = line.split('/');
 		let userName = flagwords[3];
+
+		let userAlreadyRecorded = false;
+		let usersCurrentScore = -1;
+		if (users) {
+			for (let i = 0; i < users.length; i++) {
+			if (users[i].name === userName) {
+				userAlreadyRecorded = true;
+				usersCurrentScore = users[i].score;
+				break;
+			}
+		}
+		}
+
+		// new user - initialize with a 0 value and then give current value
+		if (!userAlreadyRecorded) {
+			this.addScoreToUser(userName, 0, "2017-6-19-00-00");
+			let score = 10 - (.2 * (parseInt(linearr[3]) - 1));
+			score = Math.round(score*10)/10;
+			//console.log(score);
+			this.addScoreToUser(userName, score, this.convertTsToDate(linearr[1]))
+		}
+		else {
+			/*let score = usersCurrentScore - (.2 * (parseInt(linearr[3])));
+			score = Math.round(score*10)/10;
+			this.addScoreToUser(userName, score, this.convertTsToDate(linearr[1])); */
+			//return;
+		}
 		console.log(userName);
 	}, 
 
