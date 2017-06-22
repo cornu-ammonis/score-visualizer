@@ -99,7 +99,7 @@ module.exports = {
 		}
 
 		try {
-			return require('./data/userscores.json');
+			return JSON.parse(this.fs.readFileSync('./data/userscores.json').toString());
 		}
 		catch (e) {
 			console.log (e.message);
