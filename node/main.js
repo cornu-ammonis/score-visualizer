@@ -19,6 +19,8 @@ app.get('/updatescore/:pw/:username/:score', controller.updateScore);
 
 app.get('/updateflags', controller.updateFlags);
 
+app.get('/seedcount', controller.getSeedCount);
+
 let port = 3000;
 
 app.listen(port, function() {
