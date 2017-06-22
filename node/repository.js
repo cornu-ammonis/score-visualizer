@@ -141,7 +141,17 @@ module.exports = {
 			this.addScoreToUser(userName, 10, this.convertTsToDate(linearr[1]));
 		}
 		else {
-			this.addScoreToUser(userName, 20, this.convertTsToDate(linearr[1]));
+			let ranks = this.retrieveUserRanks();
+
+			for (let i = 0; i < ranks.length; i++) {
+				if (ranks[i].name === userName) {
+					let newScore = parseInt(ranks[i].score) + 10;
+					this.addScoreToUser(userName, newScore, this.convertTsToDate(linearr[1]));
+					return;
+				}
+			}
+
+			//this.addScoreToUser(userName, 20, this.convertTsToDate(linearr[1]));
 		}
 
 
@@ -151,7 +161,7 @@ module.exports = {
 	readScoresFromSolvedFile : function() {
 		if (this.fs.existsSync('./data/solved.txt')) {
 			let arr = this.fs.readFileSync('./data/solved.txt').toString().split('\n');
-			let aliases = require('./data/aliases.json');
+			let aliases = JSON.parse(this.fs.readFileSync('./data/aliases.json').toString());
 			let seen = {};
 			for (let i = 0; i < arr.length; i++) {
 				let line = arr[i];
