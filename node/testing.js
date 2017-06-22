@@ -91,5 +91,17 @@ module.exports = {
 		let repository = require('./repository');
 		console.log('testing repositroy converTsToDate function...');
 		console.log(repository.convertTsToDate("1497910987"));
+		repository.readScoresFromSolvedFile();
+	}, 
+
+	testAliases : function() {
+		let alias = require('./data/aliases.json');
+
+		for (let i = 0; i < alias.users.length; i++) {
+			console.log('user ' + alias.users[i]);
+			for (let j = 0; j < alias.aliases[i].length; j++) {
+				console.log(alias.aliases[i][j]);
+			}
+		}
 	}
 }
