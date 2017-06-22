@@ -1,9 +1,25 @@
 html 
 	head
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js' ) 
+		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' ) 
+		style 
 		title= title
 	body
 		h1= title
-		a(href= "/") see graph of scores over time
+		div(class='row')
+			div(class='col-md-2 col-md-offset-4')
+				p <b> codename</b>
+			div(class='col-md-2')
+				p <b> score </b>
 		for user in users
-			p  #{user.name}  #{user.score}
+			div(class='row')
+				div(class='col-md-2 col-md-offset-4') 
+					p  #{user.name}  
+				div(class='col-md-2') 
+					p #{user.score}
+
+		div(class='row')
+			div(class='col-md-2 col-md-offset-4')
+				a(href= "/graph") see graph of scores over time
 

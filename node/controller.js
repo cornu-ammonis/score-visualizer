@@ -1,10 +1,16 @@
 let fs = require('fs');
 const repository = require('./repository.js');
 const hash = require('md5');
+const tester = require('./testing.js');
 
+var seedCount = 0;
 exports.seed = function () {
-	let tester = require('./testing.js');
-	tester.seedDataToUserScoresFile(repository, fs);
+	//let tester = require('./testing.js');
+	//tester.seedDataToUserScoresFile(repository, fs);
+	//tester.testUnixTs(repository);
+	//tester.testAliases();
+	repository.readScoresFromSolvedFile();
+	seedCount = seedCount + 1;
 }
 
 exports.index = function(req, res) {
@@ -80,4 +86,21 @@ exports.updateScore = function (req, res) {
 	else {
 		res.send('invalid password token');
 	}
+
+
 }
+
+	exports.updateFlags = function (req, res) {
+		try {
+			repository.readScoresFromSolvedFile();
+			res.send('success');
+		}
+		catch (e){
+			res.send('failure ' + e.message);
+		}
+		
+	}, 
+
+	exports.getSeedCount = function(req, res) {
+		res.send('seed count: ' + seedCount);
+	}

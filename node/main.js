@@ -4,17 +4,22 @@ const express = require('express');
 const app = express();
 const controller = require('./controller');
 controller.seed();
+setInterval(controller.seed, 30000);
 
 app.set('view engine', 'pug');
 
 
-app.get('/', controller.index);
+app.get('/graph', controller.index);
 
 app.get('/testdata', controller.getScores);
 
-app.get('/ranks', controller.getRanks);
+app.get('/', controller.getRanks);
 
 app.get('/updatescore/:pw/:username/:score', controller.updateScore);
+
+app.get('/updateflags', controller.updateFlags);
+
+app.get('/seedcount', controller.getSeedCount);
 
 let port = 3000;
 
