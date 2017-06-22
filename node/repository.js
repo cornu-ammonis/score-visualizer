@@ -56,7 +56,8 @@ module.exports = {
 			this.fs.writeFileSync('./data/userscores.json', JSON.stringify(data));
 		}
 		else {
-			let data = require('./data/userscores.json');
+			let data =  JSON.parse(this.fs.readFileSync('./data/userscores.json'));
+			this.fs.writeFileSync('./data/userscores.json', '');
 			let userAlreadyExisted = false;
 			for (let i = 0; i < data.users.length; i++) {
 				if (data.users[i] === user) {
@@ -136,6 +137,7 @@ module.exports = {
 		
 		// not an alias - so initialize their 0 score and name
 		if (userName === undefined) {
+			console.log('initializing');
 			userName = flagwords[3];
 			this.addScoreToUser(userName, 0, "2017-6-18-00-00");
 			this.addScoreToUser(userName, 10, this.convertTsToDate(linearr[1]));
@@ -160,6 +162,7 @@ module.exports = {
 	// currently hard coded for the reverse assignment, needs to be generalized
 	readScoresFromSolvedFile : function() {
 		if (this.fs.existsSync('./data/solved.txt')) {
+			
 			let arr = this.fs.readFileSync('./data/solved.txt').toString().split('\n');
 			let aliases = JSON.parse(this.fs.readFileSync('./data/aliases.json').toString());
 			let seen = {};
