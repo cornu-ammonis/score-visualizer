@@ -1,13 +1,16 @@
 let fs = require('fs');
 const repository = require('./repository.js');
 const hash = require('md5');
+const tester = require('./testing.js');
 
+var seededNumber = 0;
 exports.seed = function () {
 	//let tester = require('./testing.js');
 	//tester.seedDataToUserScoresFile(repository, fs);
 	//tester.testUnixTs(repository);
 	//tester.testAliases();
 	repository.readScoresFromSolvedFile();
+	seededNumber = seededNumber + 1;
 }
 
 exports.index = function(req, res) {
