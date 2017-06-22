@@ -23,6 +23,7 @@ exports.seed = function () {
 		result = (t1-t0).toFixed(3);
 		console.log('took ' + result + " ms to read and hash scores file to " + hashOfSolvedFile);
 		console.log('initial seed, hashing and constructing database..');
+		repository.readScoresFromSolvedFile();
 	}
 	else {
 		let oldHash = hashOfSolvedFile;
