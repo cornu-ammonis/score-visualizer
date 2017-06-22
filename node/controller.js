@@ -99,4 +99,8 @@ exports.updateScore = function (req, res) {
 			res.send('failure ' + e.message);
 		}
 		
+	}, 
+
+	exports.getSeededNumber = function(req, res) {
+		res.send('seed count: ' + seededNumber);
 	}
