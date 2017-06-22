@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const controller = require('./controller');
 controller.seed();
+setInterval(controller.seed, 5000);
 
 app.set('view engine', 'pug');
 
