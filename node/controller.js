@@ -3,14 +3,14 @@ const repository = require('./repository.js');
 const hash = require('md5');
 const tester = require('./testing.js');
 
-var seededNumber = 0;
+var seedCount = 0;
 exports.seed = function () {
 	//let tester = require('./testing.js');
 	//tester.seedDataToUserScoresFile(repository, fs);
 	//tester.testUnixTs(repository);
 	//tester.testAliases();
 	repository.readScoresFromSolvedFile();
-	seededNumber = seededNumber + 1;
+	seedCount = seedCount + 1;
 }
 
 exports.index = function(req, res) {
@@ -101,6 +101,6 @@ exports.updateScore = function (req, res) {
 		
 	}, 
 
-	exports.getSeededNumber = function(req, res) {
-		res.send('seed count: ' + seededNumber);
+	exports.getSeedCount = function(req, res) {
+		res.send('seed count: ' + seedCount);
 	}
