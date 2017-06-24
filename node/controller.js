@@ -135,17 +135,17 @@ exports.updateScore = function (req, res) {
 
 }
 
-	exports.updateFlags = function (req, res) {
-		try {
-			repository.readScoresFromSolvedFile();
-			res.send('success');
-		}
-		catch (e){
-			res.send('failure ' + e.message);
-		}
-		
-	}, 
-
-	exports.getSeedCount = function(req, res) {
-		res.send('seed count: ' + seedCount);
+exports.updateFlags = function (req, res) {
+	try {
+		repository.readScoresFromSolvedFile();
+		res.send('success');
 	}
+	catch (e){
+		res.send('failure ' + e.message);
+	}
+	
+}, 
+
+exports.getSeedCount = function(req, res) {
+	res.send('seed count: ' + seedCount);
+}
