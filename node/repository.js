@@ -125,7 +125,7 @@ module.exports = {
 			return;
 		}
 
-		for (let i = 0; i < data.length; i++) {
+		for (let i = 0; i < data.users.length; i++) {
 			if (data.users[i] === userName) {
 				return data.points[i];
 			}
