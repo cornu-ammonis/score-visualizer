@@ -133,7 +133,7 @@ module.exports = {
 
 		// never found a user matching the name, data is empty
 		return -1;
-	}
+	},
 
 	retrieveUserRanks : function () {
 		if (!this.fs.existsSync('./data/userranks.json')) {
