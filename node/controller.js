@@ -172,6 +172,7 @@ exports.getScoresForUser = function(req, res) {
 	}
 
 	let data = {user: userName, points: datapoints};
+	res.send(JSON.stringify(data));
 
 }
 
