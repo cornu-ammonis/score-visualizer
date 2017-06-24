@@ -144,8 +144,42 @@ exports.updateFlags = function (req, res) {
 		res.send('failure ' + e.message);
 	}
 	
-}, 
+} 
 
 exports.getSeedCount = function(req, res) {
 	res.send('seed count: ' + seedCount);
+}
+
+exports.getScoresForUser = function(req, res) {
+	let userName = req.params['userName'];
+
+	if (userName === undefined) {
+		res.end('no username given - must provide as a route parameter');
+	}
+
+	let datapoints = repository.retrieveOneUserScore(userName);
+
+	// edge cases
+	if (datapoints === null) {
+		res.end('score file not found');
+	}
+	if (datapoints === undefined) {
+		res.end('error reading score file');
+	}
+	if (datapoints === -1) {
+		res.send('user not found');
+	}
+
+	let data = {user: userName, points: datapoints};
+
+}
+
+exports.getIndividualGraph = function(req, res) {
+	let userName = req.params['userName'];
+
+	if (userName === undefined) {
+		res.end('no username given - must provide as a route parameter');
+	}
+
+	res.render('individualgraph', {dataurl = "/getscoresforuser/" + userName});
 }
