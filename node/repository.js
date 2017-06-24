@@ -111,7 +111,7 @@ module.exports = {
 	//   returns null if file not found
 	//   returns undefined if error parsing file
 	//   returns -1 if the user is not found.
-	retrieveUserScore : function(userName) {
+	retrieveOneUserScore : function(userName) {
 
 		data = this.retrieveUserScores();
 
