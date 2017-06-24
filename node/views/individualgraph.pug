@@ -11,6 +11,7 @@ html
 
 		script.
 			$(document).ready(function() {
+			d3.json(#{dataurl}, function(data) {
 
 			MG.data_graphic({
 			  title: "Scores over time for " + data.user,
