@@ -2,14 +2,59 @@ let fs = require('fs');
 const repository = require('./repository.js');
 const hash = require('md5');
 const tester = require('./testing.js');
+const now = require('performance-now');
+var hashOfSolvedFile;
 
 var seedCount = 0;
+
+
+// to do - save old file and take only new lines
 exports.seed = function () {
 	//let tester = require('./testing.js');
 	//tester.seedDataToUserScoresFile(repository, fs);
 	//tester.testUnixTs(repository);
 	//tester.testAliases();
-	repository.readScoresFromSolvedFile();
+
+	// happens if and only if program is just starting
+	if (hashOfSolvedFile === undefined) {
+		
+		// time and compute hash of file
+		t0 = now();
+		hashOfSolvedFile = hash(fs.readFileSync('./data/solved.txt').toString());
+		t1 = now();
+		result = (t1-t0).toFixed(3);
+		console.log('took ' + result + " ms to read and hash scores file to " + hashOfSolvedFile);
+		console.log('initial seed, hashing and constructing database..');
+		
+		// seed the database
+		repository.readScoresFromSolvedFile();
+	}
+	else {
+
+		// tmp
+		let oldHash = hashOfSolvedFile;
+		
+		// time and compute new hash
+		let t0 = now();
+		hashOfSolvedFile = hash(fs.readFileSync('./data/solved.txt').toString());
+		let t1 = now();
+		result = (t1-t0).toFixed(3);
+		console.log('took ' + result + " ms to read and hash scores file to " + hashOfSolvedFile);
+
+		// if file differs, re-parse it to update db
+		if (hashOfSolvedFile !== oldHash) {
+			console.log('hash differed! updating database...');
+			
+			// re-consume solved.txt and time the process
+			t0 = now();
+			repository.readScoresFromSolvedFile();
+			t1 = now();
+			result = (t1-t0).toFixed(3);
+			console.log('took ' + result + " ms to read scores from file");
+		}
+	}
+
+	// used for getSeedCount(req, res)
 	seedCount = seedCount + 1;
 }
 

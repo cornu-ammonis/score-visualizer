@@ -46,6 +46,7 @@ module.exports = {
 
 	addScoreToUser : function(user, score, dateString = this.getCurrentDateString() ) {
 
+
 		if(!this.fs.existsSync('./data/userscores.json')) {
 			let data = {users: [], points: []};
 			data.users.push(user);
@@ -98,7 +99,7 @@ module.exports = {
 		}
 
 		try {
-			return require('./data/userscores.json');
+			return JSON.parse(this.fs.readFileSync('./data/userscores.json').toString());
 		}
 		catch (e) {
 			console.log (e.message);
@@ -161,8 +162,16 @@ module.exports = {
 
 	// currently hard coded for the reverse assignment, needs to be generalized
 	readScoresFromSolvedFile : function() {
+
+		try {
+			this.fs.unlinkSync('./data/userscores.json');
+		}
+		catch (e) {
+			console.log('exception when deleting scores');
+		}
+		
 		if (this.fs.existsSync('./data/solved.txt')) {
-			
+
 			let arr = this.fs.readFileSync('./data/solved.txt').toString().split('\n');
 			let aliases = JSON.parse(this.fs.readFileSync('./data/aliases.json').toString());
 			let seen = {};

@@ -8,18 +8,18 @@ html
 	body
 		h1= title
 		div(class='row')
-			div(class='col-md-2 col-md-offset-4 col-xs-4 col-xs-offset-4')
+			div(class='col-md-2 col-md-offset-4 col-xs-4 col-xs-offset-2')
 				p <b> codename</b>
 			div(class='col-md-2 col-xs-6')
 				p <b> score </b>
 		for user in users
 			div(class='row')
-				div(class='col-md-2 col-md-offset-4 col-xs-4 col-xs-offset-4') 
+				div(class='col-md-2 col-md-offset-4 col-xs-4 col-xs-offset-2') 
 					p  #{user.name}  
 				div(class='col-md-2 col-xs-6') 
 					p #{user.score}
 
 		div(class='row')
-			div(class='col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4')
+			div(class='col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-2')
 				a(href= "/graph") see graph of scores over time
 
