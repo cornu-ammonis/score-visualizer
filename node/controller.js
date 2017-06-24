@@ -156,7 +156,6 @@ exports.getScoresForUser = function(req, res) {
 	if (userName === undefined) {
 		res.end('no username given - must provide as a route parameter');
 	}
-	console.log('getting scores for ' + userName);
 
 	let datapoints = repository.retrieveOneUserScore(userName);
 
