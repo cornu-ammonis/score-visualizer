@@ -21,6 +21,9 @@ app.get('/updateflags', controller.updateFlags);
 
 app.get('/seedcount', controller.getSeedCount);
 
+app.get('/individualgraph/:userName', controller.getIndividualGraph);
+app.get('/getScoresForUser/:userName', controller.getScoresForUser);
+
 let port = 3000;
 
 app.listen(port, function() {

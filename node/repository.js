@@ -107,6 +107,34 @@ module.exports = {
 
 	},
 
+	// attempts to find the score for a particular user according to username
+	//   returns null if file not found
+	//   returns undefined if error parsing file
+	//   returns -1 if the user is not found.
+	retrieveOneUserScore : function(userName) {
+
+		data = this.retrieveUserScores();
+
+		// no file to read in 
+		if (data === null) {
+			return null;
+		}
+
+		// error parsing file
+		if (data === undefined) {
+			return;
+		}
+
+		for (let i = 0; i < data.users.length; i++) {
+			if (data.users[i] === userName) {
+				return data.points[i];
+			}
+		}
+
+		// never found a user matching the name, data is empty
+		return -1;
+	},
+
 	retrieveUserRanks : function () {
 		if (!this.fs.existsSync('./data/userranks.json')) {
 			return null;
