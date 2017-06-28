@@ -11,7 +11,7 @@ html
 
 		script.
 			$(document).ready(function() {
-			d3.json('/testdata', function(data) {
+			res = d3.json('/testdata', function(data) {
 				for (var i = 0; i < data.points.length; i++) {
 				data.points[i] = MG.convert.date(data.points[i], 'date', '%Y-%m-%d-%H-%M');
 				}
@@ -24,8 +24,12 @@ html
 			  target: "#target",
 			  legend: data.users,
 			  legend_target: '#legend',
-			  interpolate:   d3.curveMonotoneX
-				})})})
+			  interpolate:   d3.curveMonotoneX,
+				})});
+
+							
+
+				})
 			
 
 
@@ -33,4 +37,38 @@ html
 	body
 		div#target
 		div#legend
+		div#test 
+			p click a name to see individual datapoints
+
+		div#auxtarget
+
+		script.
+			$(window).load(function() {
+				setTimeout(function() {let lines = document.getElementById('legend').childNodes;
+				
+				let users = !{users};
+
+				for (let i = 0; i < lines.length; i++) {
+				lines[i].addEventListener('click', function() {
+					let dataurl = '/getscoresforuser/' + users[i];
+					
+					d3.json(dataurl, function(data) {
+					data.points = MG.convert.date(data.points, 'date', '%Y-%m-%d-%H-%M');
+					MG.data_graphic({
+				  	title: "Scores over time for " + data.user,
+				  	data: data.points,
+				  	width: 1000,
+				  	height: 625,
+				  	target: "#auxtarget",
+				  	interpolate:   d3.curveMonotoneX,
+				  	chart_type: "point"
+						})})
+
+
+				}, false);
+				}
+				
+
+			}, 2000)});
+
 
