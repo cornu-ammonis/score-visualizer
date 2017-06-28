@@ -28,5 +28,36 @@ html
 
 	body
 		div#target
+		div#toggler
+			p click here to toggle between point and line graph
+
+		script.
+			var chartType = "point";
+			$(window).load(function() {
+
+				let toggler = document.getElementById('toggler');
+				toggler.addEventListener('click', function() {
+					if (chartType === "point") {
+						chartType = "line";
+					}
+					else {
+						chartType = "point";
+					}
+
+					d3.json('#{dataurl}', function(data) {
+						data.points = MG.convert.date(data.points, 'date', '%Y-%m-%d-%H-%M');
+						MG.data_graphic({
+						title: "Scores over time for " + data.user,
+						data: data.points,
+						width: 1000,
+						height: 625,
+						target: "#target",
+						interpolate:   d3.curveMonotoneX,
+						chart_type: chartType
+					})})
+
+				})
+
+			})
 
 
