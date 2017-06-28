@@ -15,7 +15,7 @@ html
 		for user in users
 			div(class='row')
 				div(class='col-md-2 col-md-offset-4 col-xs-4 col-xs-offset-2') 
-					p  #{user.name}  
+					a(href='/individualgraph/' + user.name)  #{user.name}  
 				div(class='col-md-2 col-xs-6') 
 					p #{user.score}
 
