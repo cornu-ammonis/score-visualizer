@@ -59,7 +59,7 @@ exports.seed = function () {
 }
 
 exports.index = function(req, res) {
-	res.render('index', {message: ""});
+	res.render('index', {message: "", users: JSON.stringify(repository.retrieveUserScores().users)});
 }
 
 exports.getScores = function (req, res) {
