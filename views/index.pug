@@ -42,8 +42,9 @@ html
 		div#auxtarget
 
 		script.
-			$(window).load(function() {
-				setTimeout(function() {let lines = document.getElementById('legend').childNodes;
+			var interval = null;
+			var createLegendClickHandlers = function(lines) {
+				
 				
 				let data = !{data};
 
@@ -69,6 +70,18 @@ html
 				buttondiv.innerHTML = "<p>click a name to see individual datapoints </p>";
 				
 
-			}, 1000)});
+			}
+
+			function intervalFunction() {
+				let lines = document.getElementById('legend').childNodes;
+				if (lines.length > 1) {
+					createLegendClickHandlers(lines);
+					clearInterval(interval);
+				}
+			}
+
+			$(window).load(function() {
+				interval = setInterval(intervalFunction, 100);
+				});
 
 
