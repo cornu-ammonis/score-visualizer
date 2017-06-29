@@ -37,8 +37,7 @@ html
 	body
 		div#target
 		div#legend
-		div#test 
-			p click a name to see individual datapoints
+		div#buttondiv 
 
 		div#auxtarget
 
@@ -46,13 +45,11 @@ html
 			$(window).load(function() {
 				setTimeout(function() {let lines = document.getElementById('legend').childNodes;
 				
-				let users = !{users};
+				let data = !{users};
 
 				for (let i = 0; i < lines.length; i++) {
 				lines[i].addEventListener('click', function() {
-					let dataurl = '/getscoresforuser/' + users[i];
-					
-					d3.json(dataurl, function(data) {
+				
 					data.points = MG.convert.date(data.points, 'date', '%Y-%m-%d-%H-%M');
 					MG.data_graphic({
 				  	title: "Scores over time for " + data.user,
@@ -62,13 +59,16 @@ html
 				  	target: "#auxtarget",
 				  	interpolate:   d3.curveMonotoneX,
 				  	chart_type: "point"
-						})})
+						})
 
 
 				}, false);
 				}
+
+				let buttondiv = document.getElementById('buttondiv');
+				buttondiv.innerHTML = "<p>click a name to see individual datapoints </p>";
 				
 
-			}, 2000)});
+			}, 1000)});
 
 
