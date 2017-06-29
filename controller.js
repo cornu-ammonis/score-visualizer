@@ -162,12 +162,15 @@ exports.getScoresForUser = function(req, res) {
 	// edge cases
 	if (datapoints === null) {
 		res.end('score file not found');
+		return;
 	}
 	if (datapoints === undefined) {
 		res.end('error reading score file');
+		return;
 	}
 	if (datapoints === -1) {
-		res.send('user not found');
+		res.end('user not found');
+		return;
 	}
 
 	let data = {user: userName, points: datapoints};
@@ -177,7 +180,7 @@ exports.getScoresForUser = function(req, res) {
 
 exports.getIndividualGraph = function(req, res) {
 	let userName = req.params['userName'];
-
+	userName = userName.toUpperCase();
 	if (userName === undefined) {
 		res.end('no username given - must provide as a route parameter');
 	}
