@@ -45,15 +45,15 @@ html
 			$(window).load(function() {
 				setTimeout(function() {let lines = document.getElementById('legend').childNodes;
 				
-				let data = !{users};
+				let data = !{data};
 
 				for (let i = 0; i < lines.length; i++) {
 				lines[i].addEventListener('click', function() {
-				
-					data.points = MG.convert.date(data.points, 'date', '%Y-%m-%d-%H-%M');
+					
+					data[i].points = MG.convert.date(data.points, 'date', '%Y-%m-%d-%H-%M');
 					MG.data_graphic({
-				  	title: "Scores over time for " + data.user,
-				  	data: data.points,
+				  	title: "Scores over time for " + data.users[i],
+				  	data: data[i].points,
 				  	width: 1000,
 				  	height: 625,
 				  	target: "#auxtarget",
