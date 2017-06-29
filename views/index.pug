@@ -37,8 +37,7 @@ html
 	body
 		div#target
 		div#legend
-		div#buttondiv
-			p click a name to see individual point graph  
+		div#buttondiv 
 
 		div#auxtarget
 
@@ -66,6 +65,10 @@ html
 
 				}, false);
 				}
+
+				let buttondiv = document.getElementById('buttondiv');
+				buttondiv.innerHTML = "<p>click a name to see individual datapoints </p>";
+				
 
 			}
 
